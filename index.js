@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { sequelize } from "./config/db.js";
+import { sequelize } from "./models/index.js";
 import inventoryRoutes from "./routes/inventory.js";
 import locationRoutes from "./routes/location.js";
 
@@ -15,20 +15,14 @@ app.use("/api/inventories", inventoryRoutes);
 app.use("/api/locations", locationRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.get("/", (req, res) => res.send("Hello Vercel!"));
-const startServer = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("DB connected!");
 
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (err) {
-    console.error("DB connection failed:", err);
-  }
-};
+await sequelize.sync({ force: false });
+console.log("Database connected successfully");
 
-startServer();
+app.get("/", (req, res) => {
+  res.send("Inventory API is running...");
+});
 
-export default app;
+app.listen(PORT, () => {
+  console.log(`Backend running at http://localhost:${PORT}`);
+});
