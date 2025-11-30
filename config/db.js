@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 
-export const sequelize = new Sequelize("inventory_db", "postgres", "postgres", {
-  host: "localhost",
+export const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
+  protocol: "postgres",
   logging: false,
 });
