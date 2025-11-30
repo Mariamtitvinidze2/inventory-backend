@@ -15,7 +15,7 @@ app.use("/api/inventories", inventoryRoutes);
 app.use("/api/locations", locationRoutes);
 
 const PORT = process.env.PORT || 3000;
-
+app.get("/", (req, res) => res.send("Hello Vercel!"));
 const startServer = async () => {
   try {
     await sequelize.authenticate();
